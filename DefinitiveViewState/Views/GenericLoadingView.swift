@@ -7,22 +7,33 @@
 
 import SwiftUI
 
-struct TestGenericLoadingView: View {
+struct SampleGenericLoadingView: View {
     var body: some View {
-        NavigationStack {
-            GenericLoadingView(loader: load, content: { accounts in
-                AccountsListView(accounts: accounts)
-            })
-            .loadingProgressView {
-                AccountsListView(accounts: AccountManager.mock)
-                    .redacted(reason: .placeholder)
-                    .shimmering()
+        GenericLoadingView(loader: load2, content: { accounts in
+            AccountsListView(accounts: accounts)
+        })
+        .loadingProgressView {
+            AccountsListView(accounts: AccountManager.mock)
+                .redacted(reason: .placeholder)
+                .shimmering()
+        }
+        .navigationTitle("Accounts")
+    }
+
+    func load1() async -> GenericViewState<[Account]> {
+        do {
+            let accounts = try await AccountManager().load()
+            if accounts.isEmpty {
+                return .empty("No accounts found")
+            } else {
+                return .loaded(accounts)
             }
-            .navigationTitle("Accounts")
+        } catch {
+            return .error(error.localizedDescription)
         }
     }
 
-    func load() async throws -> [Account] {
+    func load2() async throws -> [Account] {
         try await AccountManager().load()
     }
 }
@@ -107,5 +118,5 @@ struct GenericLoadingView<Content: View, Result>: View {
 }
 
 #Preview {
-    TestGenericLoadingView()
+    SampleGenericLoadingView()
 }

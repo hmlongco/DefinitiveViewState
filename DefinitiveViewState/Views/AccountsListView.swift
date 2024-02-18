@@ -14,9 +14,6 @@ struct AccountsListView: View {
             ForEach(accounts) { account in
                 NavigationLink(account.name, value: account)
             }
-            .navigationDestination(for: Account.self) { account in
-                Text("Details for \(account.name)")
-            }
         }
     }
 }

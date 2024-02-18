@@ -34,6 +34,7 @@ class ComputedStateViewModel: ObservableObject {
             accounts = []
             empty = ""
             error = ""
+            loading = true
             accounts = try await manager.load()
             if accounts.isEmpty {
                 empty = "No accounts found"

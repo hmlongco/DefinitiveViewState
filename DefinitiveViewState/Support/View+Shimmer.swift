@@ -33,10 +33,7 @@ public struct Shimmer: ViewModifier {
     }
 
     /// The default animation effect.
-    public static let defaultAnimation = Animation
-        .linear(duration: 1.5)
-        .delay(0.25)
-        .repeatForever(autoreverses: false)
+    public static let defaultAnimation = Animation.linear(duration: 1.5).delay(0.25).repeatForever(autoreverses: false)
 
     // A default gradient for the animated mask.
     public static let defaultGradient = Gradient(colors: [
@@ -44,6 +41,26 @@ public struct Shimmer: ViewModifier {
         .black, // opaque
         .black.opacity(0.3) // translucent
     ])
+
+    /*
+     Calculating the gradient's animated start and end unit points:
+     min,min
+     \
+     ┌───────┐         ┌───────┐
+     │0,0    │ Animate │       │  "forward" gradient
+     LTR │       │ ───────►│    1,1│  / // /
+     └───────┘         └───────┘
+     \
+     max,max
+     max,min
+     /
+     ┌───────┐         ┌───────┐
+     │    1,0│ Animate │       │  "backward" gradient
+     RTL │       │ ───────►│0,1    │  \ \\ \
+     └───────┘         └───────┘
+     /
+     min,max
+     */
 
     /// The start unit point of our gradient, adjusting for layout direction.
     var startPoint: UnitPoint {
@@ -68,7 +85,11 @@ public struct Shimmer: ViewModifier {
             .mask(LinearGradient(gradient: gradient, startPoint: startPoint, endPoint: endPoint))
             .animation(animation, value: isInitialState)
             .onAppear {
-                isInitialState = false
+                // Delay the animation until the initial layout is established
+                // to prevent animating the appearance of the view
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    isInitialState = false
+                }
             }
     }
 }
@@ -93,34 +114,20 @@ public extension View {
             self
         }
     }
-}
 
-#if DEBUG
-struct Shimmer_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack(alignment: .leading, spacing: 50) {
-            PreviewView()
-            PreviewView()
-                .redacted(reason: .placeholder)
-            PreviewView()
-                .redacted(reason: .placeholder)
-                .shimmering()
-        }
-        .padding()
+    /// Adds an animated shimmering effect to any view, typically to show that an operation is in progress.
+    /// - Parameters:
+    ///   - active: Convenience parameter to conditionally enable the effect. Defaults to `true`.
+    ///   - duration: The duration of a shimmer cycle in seconds.
+    ///   - bounce: Whether to bounce (reverse) the animation back and forth. Defaults to `false`.
+    ///   - delay:A delay in seconds. Defaults to `0.25`.
+    @available(*, deprecated, message: "Use shimmering(active:animation:gradient:bandSize:) instead.")
+    @ViewBuilder func shimmering(
+        active: Bool = true, duration: Double, bounce: Bool = false, delay: Double = 0.25
+    ) -> some View {
+        shimmering(
+            active: active,
+            animation: .linear(duration: duration).delay(delay).repeatForever(autoreverses: bounce)
+        )
     }
 }
-
-struct PreviewView: View {
-    var body: some View {
-        HStack(alignment: .top) {
-            Image(systemName: "star")
-                .font(.largeTitle)
-            VStack(alignment: .leading) {
-                Text("SwiftUI Shimmer")
-                    .font(.title)
-                Text("This is some text that's going to shimmer across multiple lines.")
-            }
-        }
-    }
-}
-#endif
