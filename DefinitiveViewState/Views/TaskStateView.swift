@@ -22,9 +22,9 @@ struct TaskStateView: View {
             case let .empty(message):
                 StandardEmptyView(message: message)
             case let .error(message):
-                StandardErrorView(message: message, retry: {
+                StandardErrorView(message: message) {
                     viewModel.state = .loading
-                })
+                }
             }
         }
         .navigationTitle("Accounts")

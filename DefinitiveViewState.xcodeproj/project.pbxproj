@@ -28,6 +28,7 @@
 		4CE2C2242B8111C2002F472A /* ShimmerStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2C2232B8111C2002F472A /* ShimmerStateView.swift */; };
 		4CE2C2262B811220002F472A /* View+Shimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2C2252B811220002F472A /* View+Shimmer.swift */; };
 		4CE2C2282B8113BB002F472A /* GenericLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2C2272B8113BB002F472A /* GenericLoadingView.swift */; };
+		4CE2C22A2B82B70F002F472A /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE2C2292B82B70F002F472A /* AuthenticationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		4CE2C2232B8111C2002F472A /* ShimmerStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerStateView.swift; sourceTree = "<group>"; };
 		4CE2C2252B811220002F472A /* View+Shimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Shimmer.swift"; sourceTree = "<group>"; };
 		4CE2C2272B8113BB002F472A /* GenericLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericLoadingView.swift; sourceTree = "<group>"; };
+		4CE2C2292B82B70F002F472A /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				4CE2C21D2B810D80002F472A /* StateViewModel.swift */,
 				4CE2C2152B81076D002F472A /* VariableStateView.swift */,
 				4CE2C2172B810821002F472A /* VariableStateViewModel.swift */,
+				4CE2C2292B82B70F002F472A /* AuthenticationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 				4CE2C2082B80FE62002F472A /* AccountManager.swift in Sources */,
 				4CE2C20B2B80FEBD002F472A /* StandardViews.swift in Sources */,
 				4CE2C2102B80FFF6002F472A /* ClassicSwiftUIViewModel.swift in Sources */,
+				4CE2C22A2B82B70F002F472A /* AuthenticationView.swift in Sources */,
 				4CE2C2222B811013002F472A /* TaskStateView.swift in Sources */,
 				4CE2C2242B8111C2002F472A /* ShimmerStateView.swift in Sources */,
 				4CE2C2282B8113BB002F472A /* GenericLoadingView.swift in Sources */,

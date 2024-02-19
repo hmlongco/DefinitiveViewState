@@ -9,9 +9,9 @@ import SwiftUI
 
 struct SampleGenericLoadingView: View {
     var body: some View {
-        GenericLoadingView(loader: load2, content: { accounts in
+        GenericLoadingView(loader: load2) { accounts in
             AccountsListView(accounts: accounts)
-        })
+        }
         .loadingProgressView {
             AccountsListView(accounts: AccountManager.mock)
                 .redacted(reason: .placeholder)
@@ -20,7 +20,7 @@ struct SampleGenericLoadingView: View {
         .navigationTitle("Accounts")
     }
 
-    func load1() async -> GenericViewState<[Account]> {
+    func load1() async -> LoadingViewState<[Account]> {
         do {
             let accounts = try await AccountManager().load()
             if accounts.isEmpty {
@@ -40,16 +40,16 @@ struct SampleGenericLoadingView: View {
 
 struct GenericLoadingView<Content: View, Result>: View {
 
-    @State private var state: GenericViewState<Result> = .loading
+    @State private var state: LoadingViewState<Result> = .loading
 
-    private var loader: () async -> GenericViewState<Result>
+    private var loader: () async -> LoadingViewState<Result>
     private var content: (Result) -> Content
 
     private var progressView: (() -> any View)?
     private var emptyView: ((String, @escaping () -> Void) -> any View)?
     private var errorView: ((String, @escaping () -> Void) -> any View)?
 
-    init(loader: @escaping () async -> GenericViewState<Result>, @ViewBuilder content: @escaping (Result) -> Content) {
+    init(loader: @escaping () async -> LoadingViewState<Result>, @ViewBuilder content: @escaping (Result) -> Content) {
         self.content = content
         self.loader = loader
     }

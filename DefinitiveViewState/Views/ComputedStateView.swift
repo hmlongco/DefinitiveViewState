@@ -25,7 +25,7 @@ struct ComputedStateView: View {
             }
         }
         .navigationTitle("Accounts")
-        .onAppear() {
+        .onAppear {
             Task { await viewModel.load() }
         }
     }

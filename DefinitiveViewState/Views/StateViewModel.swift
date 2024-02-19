@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum GenericViewState<Result> {
+enum LoadingViewState<Result> {
     case loading
     case loaded(Result)
     case empty(String)
@@ -16,7 +16,7 @@ enum GenericViewState<Result> {
 
 class StateViewModel: ObservableObject {
 
-    @Published var state: GenericViewState<[Account]> = .loading
+    @Published var state: LoadingViewState<[Account]> = .loading
 
     let manager = AccountManager()
 
@@ -33,4 +33,5 @@ class StateViewModel: ObservableObject {
             state = .error(error.localizedDescription)
         }
     }
+
 }

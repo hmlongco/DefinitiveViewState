@@ -33,7 +33,7 @@ struct VariableStateView: View {
                 }
             }
             .navigationTitle("Accounts")
-            .onAppear() {
+            .onAppear {
                 Task { await viewModel.load() }
             }
         }
